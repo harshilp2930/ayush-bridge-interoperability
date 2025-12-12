@@ -31,5 +31,5 @@ Ayush Bridge is a full-stack interoperability engine that semantically maps trad
 
 ### 1. Clone the Repo
 ```bash
-git clone [https://github.com/YOUR_USERNAME/ayush-bridge-interoperability.git](https://github.com/YOUR_USERNAME/ayush-bridge-interoperability.git)
+git clone [https://github.com/harshilp2930/ayush-bridge-interoperability.git](https://github.com/harshilp2930/ayush-bridge-interoperability.git)
 cd ayush-bridge-interoperability
