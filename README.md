@@ -27,9 +27,13 @@ Ayush Bridge is a full-stack interoperability engine that semantically maps trad
 * **Algorithms:** `thefuzz` (Fuzzy Logic matching)
 * **DevOps:** Git, GitHub, Gunicorn, Vercel, Render
 
-## 📦 How to Run Locally
+## 📊 API Endpoints
 
-### 1. Clone the Repo
-```bash
-git clone [https://github.com/harshilp2930/ayush-bridge-interoperability.git](https://github.com/harshilp2930/ayush-bridge-interoperability.git)
-cd ayush-bridge-interoperability
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/search/?q=term` | Fuzzy search for diseases (e g. "Fever") |
+| `POST` | `/api/subscribe/` | Subscribe email for updates |
+| `GET` | `/swagger/` | Interactive API Documentation |
+
+---
+**Developed by Harshil Patel** *Computer Science Engineering Student*
