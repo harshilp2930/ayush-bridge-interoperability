@@ -69,7 +69,7 @@ function App() {
     }
   ];
 
-  // --- Search Function ---
+  // --- Search Function (UPDATED URL) ---
   const handleSearch = async (e) => {
     const value = e.target.value;
     setQuery(value);
@@ -77,7 +77,8 @@ function App() {
     if (value.length > 1) {
       setLoading(true);
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/search/?q=${value}`);
+        // CHANGED: Now pointing to Render Backend
+        const response = await axios.get(`https://ayush-backend-r2im.onrender.com/api/search/?q=${value}`);
         setResults(response.data);
       } catch (error) {
         console.error("Error connecting to backend:", error);
@@ -88,7 +89,7 @@ function App() {
     }
   };
 
-  // --- NEW: Subscribe Function ---
+  // --- Subscribe Function (UPDATED URL) ---
   const handleSubscribe = async () => {
     if (!email || !email.includes('@')) {
       alert("Please enter a valid email address.");
@@ -96,8 +97,8 @@ function App() {
     }
 
     try {
-      // Send the email to your Django Backend
-      await axios.post('http://127.0.0.1:8000/api/subscribe/', { email: email });
+      // CHANGED: Now pointing to Render Backend
+      await axios.post('https://ayush-backend-r2im.onrender.com/api/subscribe/', { email: email });
       alert("Success! You are now subscribed.");
       setEmail(''); // Clear the input field
     } catch (error) {
@@ -125,7 +126,9 @@ function App() {
           <span onClick={() => scrollToSection('use-cases')}>Use Cases</span>
           <span onClick={() => scrollToSection('analyze-standards')}>Analyze Standards</span>
           <span onClick={() => scrollToSection('faq')}>FAQs</span>
-          <span onClick={() => window.open('http://127.0.0.1:8000/swagger/', '_blank')}>API Docs</span>
+          
+          {/* CHANGED: Docs link now points to Render */}
+          <span onClick={() => window.open('https://ayush-backend-r2im.onrender.com/swagger/', '_blank')}>API Docs</span>
           
           <button 
             onClick={cycleTheme}
@@ -316,7 +319,7 @@ function App() {
         </div>
       </section>
 
-      {/* 8. Footer (Updated with Email Logic) */}
+      {/* 8. Footer */}
       <footer>
         <div className="footer-top">
           <div className="footer-cta">
@@ -324,7 +327,7 @@ function App() {
             <p>Get the latest updates on Ayush-ICD mappings and API version releases.</p>
           </div>
           
-          {/* --- NEW EMAIL INPUT SECTION --- */}
+          {/* --- EMAIL INPUT SECTION --- */}
           <div className="footer-input-group">
             <input 
               type="email" 
