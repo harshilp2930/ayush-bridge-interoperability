@@ -1,0 +1,94 @@
+term,namaste_code,icd_code
+Jwara (Fever),NAM-01-0023,MG26
+Vishama Jwara (Malaria / Intermittent Fever),NAM-01-0035,1F40
+Sannipata Jwara (Typhoid / Severe Fever),NAM-01-0040,1A00
+Rajayakshma (Tuberculosis),NAM-01-1250,1B10
+Masurika (Chickenpox),NAM-01-0060,1E50
+Amlapitta (Hyperacidity / GERD),NAM-02-0050,DA22
+Ajirna (Indigestion / Dyspepsia),NAM-02-0015,MD31
+Atisara (Diarrhea),NAM-02-0901,ME05
+Pravahika (Dysentery),NAM-02-0905,1A00
+Grahani (IBS / Malabsorption),NAM-02-0044,DD91
+Arsha (Hemorrhoids),NAM-02-0080,DB60
+Bhagandara (Fistula-in-ano),NAM-02-0090,DB70
+Udara (Ascites),NAM-02-0060,ME20
+Chardi (Vomiting),NAM-02-0030,MD50
+Shula (Colic Pain),NAM-02-0010,MG30
+Hridroga (Heart Disease),NAM-03-0050,BA40
+Hritshula (Angina Pectoris),NAM-03-0051,BA00
+Raktapitta (Bleeding Disorders),NAM-03-0020,4A00
+Urakshata (Chest Injury),NAM-03-0010,NA00
+Kasa (Cough),NAM-04-1102,MD21
+Shwasa (Bronchial Asthma),NAM-06-0550,CA23
+Hikka (Hiccup),NAM-04-0010,MD40
+Swarabheda (Hoarseness),NAM-04-0020,MC40
+Pandu (Anemia),NAM-05-0010,3A00
+Kamala (Jaundice),NAM-05-0312,ME30
+Kumbhakamala (Hepatitis / Severe Jaundice),NAM-05-0315,1E50
+Apasmara (Epilepsy),NAM-06-0020,8A60
+Unmada (Psychosis),NAM-06-0010,6D80
+Nidranasha (Insomnia),NAM-06-0800,7A00
+Atattva Abhinivesha (Obsessive Compulsive Disorder),NAM-06-0030,6B20
+Mada (Intoxication),NAM-06-0040,6C00
+Prameha (Urinary Disorders),NAM-07-0030,GB90
+Mutrakrichra (Dysuria),NAM-07-0010,MF50
+Mutrashmari (Kidney Stone),NAM-07-0020,GB00
+Mutraghata (Urinary Retention),NAM-07-0040,MF55
+Kushta (Dermatitis / Skin Disease),NAM-08-0020,EA80
+Shvitra (Vitiligo),NAM-08-0150,ED60
+Dadru (Ringworm),NAM-08-0030,1F00
+Vicharchika (Eczema),NAM-08-0040,EA81
+Visarpa (Herpes / Erysipelas),NAM-08-0090,1B50
+Sheetapitta (Urticaria / Hives),NAM-08-0100,EB00
+Galaganda (Goiter),NAM-08-0050,5A00
+Shotha (General Edema),NAM-09-0010,MG22
+Stanaroga (Breast Diseases),NAM-10-0020,GB20
+Sutika Jwara (Puerperal Fever),NAM-10-0010,JB40
+Pradara (Menorrhagia),NAM-11-0030,GA20
+Yoni Kandu (Vaginal Itching),NAM-11-0040,GA10
+Madhumeha (Diabetes Mellitus Type 2),NAM-12-0045,5A11
+Sthaulya (Obesity),NAM-12-0100,5B81
+Karshya (Emaciation),NAM-12-0110,5B80
+Sandhigata Vata (Osteoarthritis),NAM-13-0010,FA00
+Amavata (Rheumatoid Arthritis),NAM-13-0025,FA20
+Vatarakta (Gout),NAM-13-0040,FA25
+Manyastambha (Cervical Spondylosis),NAM-13-0070,ME83
+Pakshaghata (Hemiplegia / Stroke),NAM-13-0050,8B10
+Ardita (Facial Palsy),NAM-13-0060,8B80
+Kampavata (Parkinson's Disease),NAM-13-0080,8A00
+Gridhrasi (Sciatica),NAM-14-0090,8B93
+Kativata (Lumbago / Low Back Pain),NAM-14-0045,ME84
+Viswachi (Brachial Neuritis),NAM-14-0020,8B90
+Shiroroga (Headache),NAM-15-0010,8A80
+Suryavarta (Migraine),NAM-15-0020,8A80.0
+Ardhavabhedaka (Hemicrania),NAM-15-0030,8A80.1
+Khalitya (Alopecia / Hair Loss),NAM-15-0050,ED70
+Palitya (Premature Graying),NAM-15-0060,ED70.Y
+Abhishyanda (Conjunctivitis),NAM-16-0010,9A60
+Timira (Cataract),NAM-16-0050,9B10
+Anjananama (Stye),NAM-16-0020,9A00
+Karnashoola (Earache),NAM-17-0010,AA80
+Karnasrava (Otorrhea),NAM-17-0020,AA81
+Badhirya (Deafness),NAM-17-0050,AB50
+Karnanada (Tinnitus),NAM-17-0060,AA82
+Mukhapaka (Stomatitis),NAM-18-0020,DA01
+Dantaroga (Dental Caries),NAM-18-0050,DA08
+Krimidanta (Tooth Decay),NAM-18-0055,DA08.0
+Arasajnata (Loss of Taste),AAB-7,MB40
+Asabdasravanam (Loss of Hearing),AAB-8,AB50
+Asvapnah (Insomnia - Vata Type),AAB-9,7A00
+Akshibedah (Eye Pain),AAB-10,9D00
+Atopah (Abdominal Bloating),AAB-13,ME10
+Karnasulah (Ear Pain),AAB-23,AA80
+Kampah (Tremor),AAB-24,8A00
+Klamah (Fatigue),AAB-26,MG22
+Timirah (Darkness of Vision),AAB-43,9B10
+Tvak Shunyata (Numbness),AAB-44,MB50
+Todah (Pricking Pain),AAB-45,MG30
+Dandakah (Stiffness),AAB-46,MG31
+Dantabedah (Toothache),AAB-47,DA08
+Nidranasah (Sleeplessness),AAB-50,7A00
+Pangulyam (Lameness),AAB-53,FA00
+Padasulah (Foot Pain),AAB-55,ME84
+Bramah (Vertigo),AAB-71,AA82
+Mukatvam (Muteness),AAB-69,MB40
