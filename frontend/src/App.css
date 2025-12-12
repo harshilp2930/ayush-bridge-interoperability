@@ -457,3 +457,71 @@ footer {
   .footer-main { grid-template-columns: 1fr 1fr; }
   .footer-top { flex-direction: column; align-items: flex-start; gap: 2rem; }
 }
+
+/* --- MOBILE RESPONSIVENESS (Add to bottom of App.css) --- */
+
+@media screen and (max-width: 768px) {
+  /* 1. Fix Navigation Bar */
+  .navbar {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 15px;
+  }
+  
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+  }
+
+  /* 2. Fix Hero Text */
+  .hero h1 {
+    font-size: 2rem; /* Smaller font for mobile */
+  }
+
+  /* 3. Fix Search Box Width */
+  .search-box-card {
+    padding: 1.5rem;
+    width: 90%; /* Fit screen width */
+  }
+
+  .search-input {
+    width: 100%; /* Full width input */
+  }
+
+  /* 4. Stack the Results Grid (1 column instead of 3) */
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* 5. Stack the "How It Works" & "Use Cases" steps */
+  .steps-grid, 
+  .use-case-grid, 
+  .discovery-grid {
+    grid-template-columns: 1fr; /* Stack cards vertically */
+  }
+
+  /* 6. Fix Footer */
+  .footer-main {
+    grid-template-columns: 1fr; /* Stack footer columns */
+    text-align: center;
+    gap: 2rem;
+  }
+  
+  .footer-input-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .footer-input {
+    width: 100%;
+    border-radius: 8px;
+  }
+  
+  .footer-btn {
+    width: 100%;
+    border-radius: 8px;
+  }
+}
