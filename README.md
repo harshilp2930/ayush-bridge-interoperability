@@ -41,6 +41,3 @@ Ayush Bridge is a full-stack interoperability engine that semantically maps trad
 ```bash
 git clone [https://github.com/harshilp2930/ayush-bridge-interoperability.git](https://github.com/harshilp2930/ayush-bridge-interoperability.git)
 cd ayush-bridge-interoperability
-
----
-**Developed by Harshil Patel** *Computer Science Engineering Student*
