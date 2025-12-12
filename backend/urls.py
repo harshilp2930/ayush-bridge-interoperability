@@ -4,17 +4,14 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-# --- Updated Schema View (Public Access) ---
 schema_view = get_schema_view(
    openapi.Info(
       title="Ayush Bridge API",
       default_version='v1',
-      description="API documentation for Ayush Bridge Interoperability Engine",
-      contact=openapi.Contact(email="contact@example.com"),
-      license=openapi.License(name="BSD License"),
+      description="API documentation for Ayush Bridge",
    ),
-   public=True,  # <--- This makes it accessible to everyone
-   permission_classes=(permissions.AllowAny,), # <--- This removes the login requirement
+   public=True,  # <--- CRITICAL: This allows access without login
+   permission_classes=(permissions.AllowAny,), # <--- CRITICAL: This allows anyone to view it
 )
 
 urlpatterns = [
