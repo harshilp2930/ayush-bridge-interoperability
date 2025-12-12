@@ -124,9 +124,13 @@ STATIC_URL = 'static/'
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+# --- ADD OR REPLACE THIS AT THE BOTTOM OF settings.py ---
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': []
+    'DEFAULT_AUTHENTICATION_CLASSES': [],
 }
+
+# This tells Django: "The API is public. Do not ask for passwords."
