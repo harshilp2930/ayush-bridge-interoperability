@@ -458,70 +458,81 @@ footer {
   .footer-top { flex-direction: column; align-items: flex-start; gap: 2rem; }
 }
 
-/* --- MOBILE RESPONSIVENESS (Add to bottom of App.css) --- */
+/* =========================================
+   MOBILE RESPONSIVENESS (Phone Fixes)
+   Add this to the very bottom of App.css
+   ========================================= */
 
 @media screen and (max-width: 768px) {
-  /* 1. Fix Navigation Bar */
+
+  /* --- 1. Navbar Fix (Clean Stack) --- */
   .navbar {
-    flex-direction: column;
-    padding: 1rem;
+    flex-direction: column;   /* Stack Logo on top of links */
+    height: auto;             /* Let height grow automatically */
+    padding: 15px 10px;       /* Less padding on sides */
     gap: 15px;
   }
-  
+
   .nav-links {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
+    flex-wrap: wrap;          /* Allow links to wrap to next line */
+    justify-content: center;  /* Center align links */
     width: 100%;
+    gap: 12px;
   }
 
-  /* 2. Fix Hero Text */
-  .hero h1 {
-    font-size: 2rem; /* Smaller font for mobile */
+  .nav-links span {
+    font-size: 0.85rem;       /* Slightly smaller text */
+    padding: 5px 8px;         /* Easier to tap */
   }
 
-  /* 3. Fix Search Box Width */
+  /* --- 2. Search Bar Fix (Prevent Overflow) --- */
+  .search-section {
+    padding: 1rem;            /* Add breathing room */
+  }
+
   .search-box-card {
+    width: 100%;              /* Fit container width */
+    max-width: 100%;          /* Ensure no overflow */
+    box-sizing: border-box;   /* Includes padding in width calculation */
     padding: 1.5rem;
-    width: 90%; /* Fit screen width */
   }
 
   .search-input {
-    width: 100%; /* Full width input */
+    width: 100%;              /* Force input to fit card */
+    font-size: 1rem;          /* Prevent zooming on iPhone */
+    box-sizing: border-box;   /* Critical for alignment */
   }
 
-  /* 4. Stack the Results Grid (1 column instead of 3) */
-  .results-grid {
-    grid-template-columns: 1fr;
-  }
-
-  /* 5. Stack the "How It Works" & "Use Cases" steps */
-  .steps-grid, 
-  .use-case-grid, 
-  .discovery-grid {
-    grid-template-columns: 1fr; /* Stack cards vertically */
-  }
-
-  /* 6. Fix Footer */
-  .footer-main {
-    grid-template-columns: 1fr; /* Stack footer columns */
-    text-align: center;
-    gap: 2rem;
-  }
-  
+  /* --- 3. Footer Email Fix (Vertical Stack) --- */
   .footer-input-group {
-    flex-direction: column;
+    flex-direction: column;   /* Stack input and button */
     gap: 10px;
+    width: 100%;
+    max-width: 300px;         /* Limit width for neatness */
+    margin: 0 auto;           /* Center it */
   }
-  
+
   .footer-input {
-    width: 100%;
-    border-radius: 8px;
+    width: 100%;              /* Full width */
+    border-radius: 8px;       /* Nice rounded corners */
+    text-align: center;       /* Center text for mobile */
+    box-sizing: border-box;
   }
-  
+
   .footer-btn {
-    width: 100%;
+    width: 100%;              /* Full width button */
     border-radius: 8px;
+    padding: 12px;
+  }
+
+  /* --- 4. General Cleanup --- */
+  .hero h1 {
+    font-size: 1.8rem;        /* Smaller headline */
+    padding: 0 10px;
+  }
+
+  .results-grid {
+    grid-template-columns: 1fr; /* Stack results vertically */
   }
 }
