@@ -1,14 +1,32 @@
+"""API Views for Ayush Bridge Application
+
+This module contains all API endpoints for the Ayush Bridge application:
+1. Fuzzy Search API - Search for diseases using fuzzy matching (NAMASTE to ICD-11 mapping)
+2. Subscription API - Email subscription management for updates
+
+All endpoints are documented with Swagger/OpenAPI specifications.
+"""
+
+# Django REST Framework imports
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+
+# Swagger/OpenAPI documentation imports
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+
+# Fuzzy matching library for intelligent search
 from thefuzz import fuzz
 
-# Import both models
-from .models import Diagnosis, Subscriber 
+# Application models
+from .models import Diagnosis, Subscriber
 
-# --- 1. Fuzzy Search API ---
+
+# ============================================================================
+# FUZZY SEARCH API ENDPOINT
+# ============================================================================
+# Public endpoint for searching disease mappings between NAMASTE and ICD-11
 @swagger_auto_schema(
     method='get',
     manual_parameters=[
@@ -45,44 +63,68 @@ from .models import Diagnosis, Subscriber
         )
     }
 )
-@api_view(['GET'])
-@permission_classes([AllowAny])
+@api_view(['GET'])  # Only accept GET requests
+@permission_classes([AllowAny])  # Public endpoint - no authentication required
 def search_api(request):
-    query = request.GET.get('q', '') 
+    """
+    Fuzzy search for disease mappings between NAMASTE and ICD-11 codes.
     
+    This endpoint uses fuzzy matching to find relevant disease mappings,
+    even if the search query is misspelled or incomplete.
+    
+    Query Parameters:
+        q (str): Search query (e.g., "Fever", "Jwara", "Cough")
+    
+    Returns:
+        list: Top 10 matching diagnoses with term, NAMASTE code, and ICD-11 code
+              Sorted by relevance score (highest match first)
+    
+    Example:
+        GET /api/search/?q=fever
+        Returns: [{"term": "Fever", "namaste": "NS-01", "icd": "BA01.1"}, ...]
+    """
+    # Extract search query from URL parameters
+    query = request.GET.get('q', '')
+    
+    # Return empty list if no query provided
     if not query:
         return Response([])
 
-    # 1. Get all diagnoses from DB
+    # Step 1: Fetch all disease diagnoses from database
     all_diagnoses = Diagnosis.objects.all()
     
-    scored_results = []
+    # Step 2: Score each diagnosis for similarity to the search query
+    scored_results = []  # Will store tuples of (diagnosis, score)
     
-    # 2. Score each diagnosis against the user's query
     for item in all_diagnoses:
-        # Calculate similarity score
+        # Calculate fuzzy match score (0-100, higher = better match)
+        # Uses partial_ratio for flexible matching (handles substrings)
         score = fuzz.partial_ratio(query.lower(), item.term.lower())
         
-        # 3. Filter: Only keep good matches (> 65%)
+        # Step 3: Filter - only keep good matches (score > 65%)
         if score > 65:
             scored_results.append((item, score))
-            
-    # 4. Sort by highest score first
+    
+    # Step 4: Sort results by score (highest relevance first)
     scored_results.sort(key=lambda x: x[1], reverse=True)
     
-    # 5. Serialize the top 10 results
+    # Step 5: Format and return top 10 results as JSON
     data = [
         {
-            'term': item[0].term,
-            'namaste': item[0].namaste_code,
-            'icd': item[0].icd_code
-        } 
-        for item in scored_results[:10] 
+            'term': item[0].term,           # Disease name
+            'namaste': item[0].namaste_code,  # NAMASTE standard code
+            'icd': item[0].icd_code          # ICD-11 standard code
+        }
+        for item in scored_results[:10]  # Limit to top 10 matches
     ]
     
     return Response(data)
 
-# --- 2. Subscription API ---
+
+# ============================================================================
+# EMAIL SUBSCRIPTION API ENDPOINT
+# ============================================================================
+# Public endpoint for managing email subscriptions to platform updates
 @swagger_auto_schema(
     method='post',
     request_body=openapi.Schema(
@@ -119,17 +161,40 @@ def search_api(request):
         )
     }
 )
-@api_view(['POST'])
-@permission_classes([AllowAny])
+@api_view(['POST'])  # Only accept POST requests
+@permission_classes([AllowAny])  # Public endpoint - no authentication required
 def subscribe_api(request):
+    """
+    Subscribe an email address to receive platform updates.
+    
+    Handles duplicate subscriptions gracefully - will not create duplicates
+    if the email is already subscribed.
+    
+    Request Body:
+        email (str): Valid email address to subscribe
+    
+    Returns:
+        Success: {"message": "Subscribed successfully!"} (200)
+        Already exists: {"message": "You are already subscribed."} (200)
+        Error: {"error": "Email is required"} (400)
+    
+    Example:
+        POST /api/subscribe/
+        Body: {"email": "user@example.com"}
+    """
+    # Extract email from request body
     email = request.data.get('email')
     
+    # Validate that email was provided
     if not email:
         return Response({'error': 'Email is required'}, status=400)
-        
-    # Create the subscriber (get_or_create prevents duplicates)
+    
+    # Create subscriber or get existing one
+    # get_or_create returns (object, created_boolean)
+    # This prevents duplicate subscriptions
     obj, created = Subscriber.objects.get_or_create(email=email)
     
+    # Return appropriate message based on whether it's a new subscription
     if created:
         return Response({'message': 'Subscribed successfully!'})
     else:
