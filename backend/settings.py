@@ -30,8 +30,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'dj_rest_auth',
+    'dj_rest_auth.registration',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
     'corsheaders',
     'drf_spectacular',
     'drf_yasg',
@@ -138,6 +140,14 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
+
+# Allauth / dj-rest-auth settings (no email verification for now)
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # 7. DRF-YASG Settings
 SWAGGER_SETTINGS = {
