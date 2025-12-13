@@ -1,73 +1,75 @@
-# 🌉 Ayush Bridge Interoperability API (Python / Django REST Framework)
+# Ayush Bridge Interoperability (Django + React)
 
-## ✨ Project Summary
+End-to-end Ayush–ICD11 interoperability stack: Django REST API (Render) plus React frontend (Vercel). Supports fuzzy diagnosis search, email subscriptions, and JWT authentication.
 
-This project is the production-ready backend that powers the Ayush Bridge Interoperability Platform. Built with **Django REST Framework (DRF)**, it provides a structured, secure, and fully documented RESTful API, demonstrating expertise in full-stack deployment and complex cloud environment management.
+## Live URLs
 
-## 🚀 Live Environment & Documentation
+| Component             | URL                                                 | Host   |
+| --------------------- | --------------------------------------------------- | ------ |
+| API docs (Swagger)    | https://ayush-backend-r2im.onrender.com/api-docs/   | Render |
+| OpenAPI (spectacular) | https://ayush-backend-r2im.onrender.com/api/schema/ | Render |
+| Frontend              | https://ayush-bridge-interoperability.vercel.app/   | Vercel |
 
-| Component | Endpoint | Host Platform |
-| :--- | :--- | :--- |
-| **Live API Documentation** | `https://ayush-backend-r2im.onrender.com/api-docs/` | **Render** |
-| **Live Frontend Interface** | `https://ayush-bridge-interoperability.vercel.app/` | **Vercel** |
+## Features
 
-## 🎯 Technical Highlights & Professional Achievements
+- Fuzzy diagnosis search (NAMASTE ↔ ICD-11 mapping)
+- Email subscription capture
+- JWT auth (SimpleJWT via dj-rest-auth)
+- Public API docs (Swagger + Redoc)
+- CORS-enabled for decoupled frontend
 
-This project showcases a complete professional skill set focused on production stability and developer experience:
+## API Overview
 
-### Cloud Infrastructure & DevOps
+Public endpoints
 
-* **Decoupled Architecture:** Successfully managed a decoupled application stack, integrating a **Django/Render** backend with a **React/Vercel** frontend.
-* **Production Hardening:** Configured the application for external cloud deployment, including strict control over environment variables and deployment commands.
-* **Interoperability:** Implemented **`django-cors-headers`** to establish secure cross-domain communication between Vercel and Render services.
+- GET /api/search/?q=... — fuzzy diagnosis search
+- POST /api/subscribe/ — email subscription
 
-### Critical Production Debugging (The Static File Challenge)
+Auth endpoints (JWT)
 
-* **Problem Resolution:** Successfully diagnosed and resolved a complex, non-trivial `404 Not Found` error for static assets (CSS/JS) encountered in the live `DEBUG=False` environment.
-* **Solution Implementation:** Integrated and configured **WhiteNoise** middleware with the required `STORAGES` backend and ensured precise execution of the **`collectstatic`** command within the Render CI/CD pipeline, guaranteeing 100% asset delivery.
+- POST /api/auth/token/ — obtain access/refresh (username or email + password)
+- POST /api/auth/token/refresh/ — refresh access token
+- POST /api/auth/registration/ — user registration (alias: /api/auth/register/)
 
-### API & Developer Experience
+## Tech Stack
 
-* **Framework:** Built entirely on **Django REST Framework**, utilizing Class-Based Views and Routers for scalable endpoint definition.
-* **Documentation:** Implemented **DRF-Yasg (Swagger UI)** to auto-generate and host interactive, real-time documentation, serving as the single source of truth for API consumers.
-* **Scalability Foundation:** Established architecture ready for immediate integration of authentication, caching (e.g., Redis), and database upgrades (e.g., PostgreSQL).
+- Backend: Django 5.2, Django REST Framework, SimpleJWT, dj-rest-auth, django-allauth
+- Docs: drf-yasg (Swagger UI), drf-spectacular (OpenAPI schema)
+- Frontend: React (Vercel)
+- Deployment: Render (backend), Vercel (frontend)
 
----
+## Quickstart (Backend)
 
-## ⚙️ Local Setup Guide
+```bash
+git clone https://github.com/harshilp2930/ayush-bridge-interoperability.git
+cd ayush-bridge-interoperability
+python -m venv venv
+venv\Scripts\activate  # Windows (or: source venv/bin/activate on macOS/Linux)
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
+```
 
-Follow these steps to clone and run the project locally.
+Local docs: http://127.0.0.1:8000/api-docs/
 
-1.  **Clone the Repository:**
-    ```bash
-    git clone [https://github.com/harshilp2930/ayush-bridge-interoperability](https://github.com/harshilp2930/ayush-bridge-interoperability)
-    cd ayush-bridge-interoperability
-    ```
+## Quickstart (Frontend)
 
-2.  **Initialize Environment:**
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Windows: .\venv\Scripts\activate
-    ```
+```bash
+cd frontend
+npm install
+npm run start
+```
 
-3.  **Install Dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
+## Configuration Notes
 
-4.  **Database Migration & Superuser:**
-    ```bash
-    python manage.py migrate
-    python manage.py createsuperuser 
-    ```
+- CORS is enabled for cross-origin access from Vercel
+- Static files served via WhiteNoise in production
+- Default auth: JWT (SimpleJWT) through dj-rest-auth
 
-5.  **Run Server:**
-    ```bash
-    python manage.py runserver
-    ```
+## Contributing
 
-The local API documentation is accessible at: `http://127.0.0.1:8000/api-docs/`
+PRs welcome. Please run migrations and lint before submitting.
 
----
+## License
 
-This project is open-source under the MIT License.
+MIT
