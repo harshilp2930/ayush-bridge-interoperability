@@ -4,6 +4,11 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from rest_framework_simplejwt.views import (
+   TokenObtainPairView,
+   TokenRefreshView,
+   TokenVerifyView,
+)
 
 # 1. Schema View: Sets up the public documentation view
 schema_view = get_schema_view(
@@ -23,6 +28,9 @@ urlpatterns = [
     path('api/auth/', include('dj_rest_auth.urls')),  # Login, Logout, Password Reset
    path('api/auth/registration/', include('dj_rest_auth.registration.urls')),  # Registration
    path('api/auth/register/', include('dj_rest_auth.registration.urls')),  # Alias for registration
+   path('api/auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+   path('api/auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+   path('api/auth/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     # --------------------------------
     
     path('api/', include('api.urls')),
