@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-b_hvd)8unuj=t(d0n=1ovdbj1o2q8!v_z!f1!v=%36+oc5b%y+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = False # <--- MUST BE False for production static files to load correctly
 
 ALLOWED_HOSTS = ['*']
 
@@ -121,25 +121,22 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
-
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / 'staticfiles' # <--- CRITICAL FIX for blank page on Render
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-# --- ADD OR REPLACE THIS AT THE BOTTOM OF settings.py ---
+# --- API Permissions ---
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.AllowAny', # Allows public access
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [],
 }
 
-# This tells Django: "The API is public. Do not ask for passwords."
-
-# --- ADD THIS AT THE BOTTOM OF settings.py ---
+# --- SWAGGER/DRF-YASG Settings for Public Access ---
 
 SWAGGER_SETTINGS = {
-    'USE_SESSION_AUTH': False,  # This hides the "Login" and "Logout" buttons
-    'SECURITY_DEFINITIONS': None, # This makes it completely public
+    'USE_SESSION_AUTH': False,  # Hides the login/logout buttons
+    'SECURITY_DEFINITIONS': None, # Ensures the API is treated as completely public
 }
