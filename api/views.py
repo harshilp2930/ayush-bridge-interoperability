@@ -139,8 +139,8 @@ def subscribe_api(request):
 
 # --- TEMPORARY: Create Test User Endpoint ---
 @api_view(['GET'])
-@permission_classes([AllowAny])
 @authentication_classes([])
+@permission_classes([AllowAny])
 def create_test_user_view(request):
     """Temporary endpoint to create a test user. DELETE THIS AFTER USE!"""
     User = get_user_model()
