@@ -2,6 +2,12 @@
 
 End-to-end Ayush–ICD11 interoperability stack: Django REST API (Render) plus React frontend (Vercel). Supports fuzzy diagnosis search, email subscriptions, and JWT authentication.
 
+**Why it matters**
+
+- Standardizes Ayush (NAMASTE) diagnoses to ICD-11 for hospitals, insurers, and researchers.
+- Ships with live docs, JWT auth, and CORS-ready endpoints for easy integration.
+- Deployed and running: Render (API) + Vercel (UI).
+
 ## Project Overview
 
 Ayush Bridge standardizes traditional medicine diagnoses (NAMASTE codes) against ICD-11 so hospitals, insurers, and researchers can exchange data in a format modern EMRs understand. The backend exposes a documented REST API with JWT authentication, while the frontend provides a polished search and subscription experience.
@@ -25,6 +31,14 @@ Ayush Bridge standardizes traditional medicine diagnoses (NAMASTE codes) against
 | OpenAPI (spectacular) | https://ayush-backend-r2im.onrender.com/api/schema/ | Render |
 | Frontend              | https://ayush-bridge-interoperability.vercel.app/   | Vercel |
 
+## Quick Highlights
+
+- 🔍 Fuzzy diagnosis search (NAMASTE ↔ ICD-11)
+- ✉️ Email subscriptions
+- 🔐 JWT auth (username or email)
+- 📜 Swagger + OpenAPI docs
+- 🌐 CORS-ready decoupled stack
+
 ## Features
 
 - Fuzzy diagnosis search (NAMASTE ↔ ICD-11 mapping)
@@ -32,6 +46,7 @@ Ayush Bridge standardizes traditional medicine diagnoses (NAMASTE codes) against
 - JWT auth (SimpleJWT via dj-rest-auth)
 - Public API docs (Swagger + Redoc)
 - CORS-enabled for decoupled frontend
+- Deployed CI/CD flows on Render (backend) and Vercel (frontend)
 
 ## API Overview
 
@@ -45,6 +60,10 @@ Auth endpoints (JWT)
 - POST /api/auth/token/ — obtain access/refresh (username or email + password)
 - POST /api/auth/token/refresh/ — refresh access token
 - POST /api/auth/registration/ — user registration (alias: /api/auth/register/)
+
+Support
+
+- POST /api/auth/token/verify/ — verify access token
 
 ## Tech Stack
 
@@ -67,6 +86,12 @@ python manage.py runserver
 
 Local docs: http://127.0.0.1:8000/api-docs/
 
+Seed a test user (optional)
+
+```bash
+python manage.py createsuperuser
+```
+
 ## Quickstart (Frontend)
 
 ```bash
@@ -75,11 +100,17 @@ npm install
 npm run start
 ```
 
+Environment
+
+- Ensure backend URL points to your local or deployed API for search/subscription.
+
 ## Configuration Notes
 
 - CORS is enabled for cross-origin access from Vercel
 - Static files served via WhiteNoise in production
 - Default auth: JWT (SimpleJWT) through dj-rest-auth
+- Swagger UI served at /swagger/ and /api-docs/
+- OpenAPI schema served at /api/schema/
 
 ## Contributing
 
