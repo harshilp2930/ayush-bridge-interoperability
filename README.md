@@ -65,10 +65,13 @@ Support
 
 ## Tech Stack
 
-- Backend: Django 5.2, Django REST Framework, SimpleJWT, dj-rest-auth, django-allauth
-- Docs: drf-yasg (Swagger UI), drf-spectacular (OpenAPI schema)
-- Frontend: React (Vercel)
-- Deployment: Render (backend), Vercel (frontend)
+| Component             | Technologies Used                                     |
+| :-------------------- | :---------------------------------------------------- |
+| **Backend Framework** | Django 5.2, Django REST Framework                     |
+| **Authentication**    | SimpleJWT, dj-rest-auth, django-allauth               |
+| **Documentation**     | drf-yasg (Swagger UI), drf-spectacular (OpenAPI)      |
+| **Frontend**          | React (Vercel)                                        |
+| **Deployment**        | Render (API), Vercel (UI), WhiteNoise (static assets) |
 
 ## Quickstart (Backend)
 
@@ -106,7 +109,6 @@ Environment
 
 - CORS is enabled for cross-origin access from Vercel
 - Static files served via WhiteNoise in production
-- Default auth: JWT (SimpleJWT) through dj-rest-auth
 - Swagger UI served at /swagger/ and /api-docs/
 - OpenAPI schema served at /api/schema/
 
