@@ -138,7 +138,21 @@ def subscribe_api(request):
         return Response({'message': 'You are already subscribed.'})
 
 
-# --- TEMPORARY: Create Test User Endpoint ---
+# --- TEMPORARY: Debug and Create Test User Endpoints ---
+class DebugUsersView(APIView):
+    authentication_classes = []
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        """Show all users for debugging. DELETE THIS AFTER USE!"""
+        User = get_user_model()
+        users = User.objects.all().values('id', 'username', 'email', 'is_active', 'is_staff')
+        return Response({
+            'total_users': User.objects.count(),
+            'users': list(users)
+        })
+
+
 class CreateTestUserView(APIView):
     authentication_classes = []
     permission_classes = [AllowAny]
@@ -151,19 +165,34 @@ class CreateTestUserView(APIView):
         email = 'api@test.com'
         password = 'TestPassword123!'
 
-        User.objects.filter(username=username).delete()
+        # Delete existing
+        deleted_count, _ = User.objects.filter(username=username).delete()
 
-        User.objects.create_user(
+        # Create new user
+        user = User.objects.create_user(
             username=username,
             email=email,
-            password=password,
-            is_active=True
+            password=password
         )
+        user.is_active = True
+        user.save()
+
+        # Verify creation
+        check_user = User.objects.filter(username=username).first()
+        can_login = check_user.check_password(password) if check_user else False
 
         return Response({
             'status': 'success',
             'message': 'Test user created!',
+            'deleted_old_user': deleted_count > 0,
+            'user_exists': check_user is not None,
+            'user_is_active': check_user.is_active if check_user else False,
+            'password_valid': can_login,
             'username': username,
             'password': password,
-            'login_url': '/api/auth/login/'
+            'email': email,
+            'login_endpoints': {
+                'jwt': '/api/auth/token/',
+                'rest': '/api/auth/login/'
+            }
         })
