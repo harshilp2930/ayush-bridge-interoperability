@@ -4,6 +4,7 @@ from rest_framework.permissions import AllowAny
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from thefuzz import fuzz  # <-- This was missing!
+from django.contrib.auth import get_user_model
 
 # Import both models
 from .models import Diagnosis, Subscriber 
@@ -134,3 +135,34 @@ def subscribe_api(request):
         return Response({'message': 'Subscribed successfully!'})
     else:
         return Response({'message': 'You are already subscribed.'})
+
+
+# --- TEMPORARY: Create Test User Endpoint ---
+@permission_classes([AllowAny])
+@api_view(['GET'])
+def create_test_user_view(request):
+    """Temporary endpoint to create a test user. DELETE THIS AFTER USE!"""
+    User = get_user_model()
+    
+    username = 'apitestuser'
+    email = 'api@test.com'
+    password = 'TestPassword123!'
+    
+    # Delete existing test user if exists
+    User.objects.filter(username=username).delete()
+    
+    # Create new test user
+    user = User.objects.create_user(
+        username=username,
+        email=email,
+        password=password,
+        is_active=True
+    )
+    
+    return Response({
+        'status': 'success',
+        'message': 'Test user created!',
+        'username': username,
+        'password': password,
+        'login_url': '/api/auth/login/'
+    })
