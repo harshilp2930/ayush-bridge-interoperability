@@ -94,19 +94,31 @@ def search_api(request):
     all_diagnoses = Diagnosis.objects.all()
     
     # Step 2: Score each diagnosis for similarity to the search query
-    scored_results = []  # Will store tuples of (diagnosis, score)
+    scored_results = []  # Will store tuples of (diagnosis, score, term_length)
     
     for item in all_diagnoses:
-        # Calculate fuzzy match score (0-100, higher = better match)
-        # Uses partial_ratio for flexible matching (handles substrings)
-        score = fuzz.partial_ratio(query.lower(), item.term.lower())
+        # Calculate fuzzy match score using multiple algorithms for better accuracy
+        # Combine three methods to get more consistent results:
+        #   1. token_set_ratio: Compares word sets, ignoring order (best for multi-word terms)
+        #   2. token_sort_ratio: Sorts tokens before comparing (good for word reordering)
+        #   3. partial_ratio: Finds longest substring match (for partial queries)
+        score1 = fuzz.token_set_ratio(query.lower(), item.term.lower())
+        score2 = fuzz.token_sort_ratio(query.lower(), item.term.lower())
+        score3 = fuzz.partial_ratio(query.lower(), item.term.lower())
+        
+        # Take the average of the three scores for more balanced results
+        combined_score = (score1 + score2 + score3) / 3
         
         # Step 3: Filter - only keep good matches (score > 65%)
-        if score > 65:
-            scored_results.append((item, score))
+        if combined_score > 65:
+            # Store: diagnosis, combined score, and term length (for secondary sort)
+            scored_results.append((item, combined_score, len(item.term)))
     
-    # Step 4: Sort results by score (highest relevance first)
-    scored_results.sort(key=lambda x: x[1], reverse=True)
+    # Step 4: Sort results with multi-criteria ranking
+    # Primary: Higher combined score (better match)
+    # Secondary: Shorter term length (more specific/direct match)
+    # Tertiary: Alphabetical (consistent ordering)
+    scored_results.sort(key=lambda x: (-x[1], x[2], x[0].term))
     
     # Step 5: Format and return top 10 results as JSON
     data = [
@@ -115,12 +127,6 @@ def search_api(request):
             'namaste': item[0].namaste_code,  # NAMASTE standard code
             'icd': item[0].icd_code          # ICD-11 standard code
         }
-        for item in scored_results[:10]  # Limit to top 10 matches
-    ]
-    
-    return Response(data)
-
-
 # ============================================================================
 # EMAIL SUBSCRIPTION API ENDPOINT
 # ============================================================================
