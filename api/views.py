@@ -127,6 +127,12 @@ def search_api(request):
             'namaste': item[0].namaste_code,  # NAMASTE standard code
             'icd': item[0].icd_code          # ICD-11 standard code
         }
+        for item in scored_results[:10]  # Limit to top 10 matches
+    ]
+    
+    return Response(data)
+
+
 # ============================================================================
 # EMAIL SUBSCRIPTION API ENDPOINT
 # ============================================================================
