@@ -1,5 +1,6 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from thefuzz import fuzz  # <-- This was missing!
@@ -44,6 +45,7 @@ from .models import Diagnosis, Subscriber
         )
     }
 )
+@permission_classes([AllowAny])
 @api_view(['GET'])
 def search_api(request):
     query = request.GET.get('q', '') 
@@ -117,6 +119,7 @@ def search_api(request):
         )
     }
 )
+@permission_classes([AllowAny])
 @api_view(['POST'])
 def subscribe_api(request):
     email = request.data.get('email')
