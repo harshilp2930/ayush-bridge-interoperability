@@ -22,6 +22,7 @@ urlpatterns = [
     # --- Authentication Endpoints ---
     path('api/auth/', include('dj_rest_auth.urls')),  # Login, Logout, Password Reset
    path('api/auth/registration/', include('dj_rest_auth.registration.urls')),  # Registration
+   path('api/auth/register/', include('dj_rest_auth.registration.urls')),  # Alias for registration
     # --------------------------------
     
     path('api/', include('api.urls')),
