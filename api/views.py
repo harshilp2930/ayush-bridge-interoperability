@@ -1,11 +1,9 @@
-from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from rest_framework.views import APIView
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from thefuzz import fuzz  # <-- This was missing!
-from django.contrib.auth import get_user_model
+from thefuzz import fuzz
 
 # Import both models
 from .models import Diagnosis, Subscriber 
@@ -136,63 +134,3 @@ def subscribe_api(request):
         return Response({'message': 'Subscribed successfully!'})
     else:
         return Response({'message': 'You are already subscribed.'})
-
-
-# --- TEMPORARY: Debug and Create Test User Endpoints ---
-class DebugUsersView(APIView):
-    authentication_classes = []
-    permission_classes = [AllowAny]
-
-    def get(self, request):
-        """Show all users for debugging. DELETE THIS AFTER USE!"""
-        User = get_user_model()
-        users = User.objects.all().values('id', 'username', 'email', 'is_active', 'is_staff')
-        return Response({
-            'total_users': User.objects.count(),
-            'users': list(users)
-        })
-
-
-class CreateTestUserView(APIView):
-    authentication_classes = []
-    permission_classes = [AllowAny]
-
-    def get(self, request):
-        """Temporary endpoint to create a test user. DELETE THIS AFTER USE!"""
-        User = get_user_model()
-
-        username = 'apitestuser'
-        email = 'api@test.com'
-        password = 'TestPassword123!'
-
-        # Delete existing
-        deleted_count, _ = User.objects.filter(username=username).delete()
-
-        # Create new user
-        user = User.objects.create_user(
-            username=username,
-            email=email,
-            password=password
-        )
-        user.is_active = True
-        user.save()
-
-        # Verify creation
-        check_user = User.objects.filter(username=username).first()
-        can_login = check_user.check_password(password) if check_user else False
-
-        return Response({
-            'status': 'success',
-            'message': 'Test user created!',
-            'deleted_old_user': deleted_count > 0,
-            'user_exists': check_user is not None,
-            'user_is_active': check_user.is_active if check_user else False,
-            'password_valid': can_login,
-            'username': username,
-            'password': password,
-            'email': email,
-            'login_endpoints': {
-                'jwt': '/api/auth/token/',
-                'rest': '/api/auth/login/'
-            }
-        })
