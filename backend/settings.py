@@ -134,3 +134,10 @@ REST_FRAMEWORK = {
 }
 
 # This tells Django: "The API is public. Do not ask for passwords."
+
+# --- ADD THIS AT THE BOTTOM OF settings.py ---
+
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,  # This hides the "Login" and "Logout" buttons
+    'SECURITY_DEFINITIONS': None, # This makes it completely public
+}
