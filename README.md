@@ -1,43 +1,73 @@
-# 💠 Ayush Bridge: Interoperability Engine for Traditional Medicine
+# 🌉 Ayush Bridge Interoperability API (Python / Django REST Framework)
 
-> **Live Demo:** [https://ayush-bridge-interoperability.vercel.app](https://ayush-bridge-interoperability.vercel.app)  
-> **Backend API:** [https://ayush-backend-r2im.onrender.com/swagger/](https://ayush-backend-r2im.onrender.com/swagger/)
+## ✨ Project Summary
 
-## 🏥 Problem Statement
-In the Indian healthcare ecosystem, Traditional Medicine (Ayush) and Modern Medicine (Allopathy) speak different digital languages. 
-* **Modern Medicine** uses **WHO ICD-11** standards.
-* **Ayurveda** uses **NAMASTE** (National Ayush Morbidity Standardized Terminologies).
+This project is the production-ready backend that powers the Ayush Bridge Interoperability Platform. Built with **Django REST Framework (DRF)**, it provides a structured, secure, and fully documented RESTful API, demonstrating expertise in full-stack deployment and complex cloud environment management.
 
-This disconnect makes it impossible to create unified Electronic Health Records (EHR) or file standardized insurance claims for Ayush treatments.
+## 🚀 Live Environment & Documentation
 
-## 🚀 The Solution: Ayush Bridge
-Ayush Bridge is a full-stack interoperability engine that semantically maps traditional diagnosis terms to international standards. It acts as a "Google Translate" for medical systems, allowing an Ayurvedic diagnosis like *"Jwara"* to be instantly recognized as *"MG26 (Fever)"* in global hospital systems.
-
-## ✨ Key Features
-* **🔍 Smart Fuzzy Search:** Implemented **Levenshtein Distance Algorithm** (via Python) to handle typos and spelling variations (e.g., searching "Feever" still finds "Fever").
-* **🌍 Dual-Standard Mapping:** Simultaneously retrieves **NAMASTE Codes** (National) and **ICD-11 TM2 Codes** (International).
-* **⚡ RESTful API Architecture:** Fast, scalable backend built with **Django REST Framework** serving JSON data.
-* **🎨 Glassmorphism UI:** A modern, responsive React frontend designed for medical clerks and doctors.
-* **☁️ Cloud Native:** Fully deployed with CI/CD pipelines on **Vercel** (Frontend) and **Render** (Backend).
-
-## 🛠️ Tech Stack
-* **Frontend:** React.js, CSS3 (Custom Responsive Design), Axios
-* **Backend:** Django, Django REST Framework (DRF), Python 3.9
-* **Database:** SQLite (Dev) / PostgreSQL (Prod)
-* **Algorithms:** `thefuzz` (Fuzzy Logic matching)
-* **DevOps:** Git, GitHub, Gunicorn, Vercel, Render
-
-## 📊 API Endpoints
-
-| Method | Endpoint | Description |
+| Component | Endpoint | Host Platform |
 | :--- | :--- | :--- |
-| `GET` | `/api/search/?q=term` | Fuzzy search for diseases (e g. "Fever") |
-| `POST` | `/api/subscribe/` | Subscribe email for updates |
-| `GET` | `/swagger/` | Interactive API Documentation |
+| **Live API Documentation** | `https://ayush-backend-r2im.onrender.com/api-docs/` | **Render** |
+| **Live Frontend Interface** | `https://ayush-bridge-interoperability.vercel.app/` | **Vercel** |
 
-## 📦 How to Run Locally
+## 🎯 Technical Highlights & Professional Achievements
 
-### 1. Clone the Repo
-```bash
-git clone [https://github.com/harshilp2930/ayush-bridge-interoperability.git](https://github.com/harshilp2930/ayush-bridge-interoperability.git)
-cd ayush-bridge-interoperability
+This project showcases a complete professional skill set focused on production stability and developer experience:
+
+### Cloud Infrastructure & DevOps
+
+* **Decoupled Architecture:** Successfully managed a decoupled application stack, integrating a **Django/Render** backend with a **React/Vercel** frontend.
+* **Production Hardening:** Configured the application for external cloud deployment, including strict control over environment variables and deployment commands.
+* **Interoperability:** Implemented **`django-cors-headers`** to establish secure cross-domain communication between Vercel and Render services.
+
+### Critical Production Debugging (The Static File Challenge)
+
+* **Problem Resolution:** Successfully diagnosed and resolved a complex, non-trivial `404 Not Found` error for static assets (CSS/JS) encountered in the live `DEBUG=False` environment.
+* **Solution Implementation:** Integrated and configured **WhiteNoise** middleware with the required `STORAGES` backend and ensured precise execution of the **`collectstatic`** command within the Render CI/CD pipeline, guaranteeing 100% asset delivery.
+
+### API & Developer Experience
+
+* **Framework:** Built entirely on **Django REST Framework**, utilizing Class-Based Views and Routers for scalable endpoint definition.
+* **Documentation:** Implemented **DRF-Yasg (Swagger UI)** to auto-generate and host interactive, real-time documentation, serving as the single source of truth for API consumers.
+* **Scalability Foundation:** Established architecture ready for immediate integration of authentication, caching (e.g., Redis), and database upgrades (e.g., PostgreSQL).
+
+---
+
+## ⚙️ Local Setup Guide
+
+Follow these steps to clone and run the project locally.
+
+1.  **Clone the Repository:**
+    ```bash
+    git clone [https://github.com/harshilp2930/ayush-bridge-interoperability](https://github.com/harshilp2930/ayush-bridge-interoperability)
+    cd ayush-bridge-interoperability
+    ```
+
+2.  **Initialize Environment:**
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows: .\venv\Scripts\activate
+    ```
+
+3.  **Install Dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4.  **Database Migration & Superuser:**
+    ```bash
+    python manage.py migrate
+    python manage.py createsuperuser 
+    ```
+
+5.  **Run Server:**
+    ```bash
+    python manage.py runserver
+    ```
+
+The local API documentation is accessible at: `http://127.0.0.1:8000/api-docs/`
+
+---
+
+This project is open-source under the MIT License.
