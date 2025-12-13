@@ -11,9 +11,38 @@ from .models import Diagnosis, Subscriber
 @swagger_auto_schema(
     method='get',
     manual_parameters=[
-        openapi.Parameter('q', openapi.IN_QUERY, description="Search query (e.g. Fever)", type=openapi.TYPE_STRING)
+        openapi.Parameter(
+            'q', 
+            openapi.IN_QUERY, 
+            description="Search query (e.g. Fever, Jwara, Cough)", 
+            type=openapi.TYPE_STRING,
+            required=True,
+            example="Fever"
+        )
     ],
-    responses={200: 'JSON Response with fuzzy-matched diagnosis codes'}
+    responses={
+        200: openapi.Response(
+            description='List of matching diagnoses',
+            schema=openapi.Schema(
+                type=openapi.TYPE_ARRAY,
+                items=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        'term': openapi.Schema(type=openapi.TYPE_STRING, description='Disease name'),
+                        'namaste': openapi.Schema(type=openapi.TYPE_STRING, description='NAMASTE code'),
+                        'icd': openapi.Schema(type=openapi.TYPE_STRING, description='ICD-11 code'),
+                    }
+                ),
+                example=[
+                    {
+                        "term": "Fever",
+                        "namaste": "NS-01",
+                        "icd": "BA01.1"
+                    }
+                ]
+            )
+        )
+    }
 )
 @api_view(['GET'])
 def search_api(request):
@@ -56,10 +85,37 @@ def search_api(request):
     method='post',
     request_body=openapi.Schema(
         type=openapi.TYPE_OBJECT,
-        properties={'email': openapi.Schema(type=openapi.TYPE_STRING, description='User Email')},
+        properties={
+            'email': openapi.Schema(
+                type=openapi.TYPE_STRING, 
+                description='User Email address',
+                example='user@example.com'
+            )
+        },
         required=['email']
     ),
-    responses={201: 'Subscribed Successfully', 400: 'Invalid Email'}
+    responses={
+        201: openapi.Response(
+            description='Subscription successful',
+            schema=openapi.Schema(
+                type=openapi.TYPE_OBJECT,
+                properties={
+                    'message': openapi.Schema(type=openapi.TYPE_STRING)
+                },
+                example={'message': 'Subscribed successfully!'}
+            )
+        ),
+        400: openapi.Response(
+            description='Invalid email',
+            schema=openapi.Schema(
+                type=openapi.TYPE_OBJECT,
+                properties={
+                    'error': openapi.Schema(type=openapi.TYPE_STRING)
+                },
+                example={'error': 'Email is required'}
+            )
+        )
+    }
 )
 @api_view(['POST'])
 def subscribe_api(request):

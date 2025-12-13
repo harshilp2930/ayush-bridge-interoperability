@@ -128,7 +128,7 @@ function App() {
           <span onClick={() => scrollToSection('faq')}>FAQs</span>
           
           {/* CHANGED: Docs link now points to Render */}
-          <span onClick={() => window.open('https://ayush-backend-r2im.onrender.com/swagger/', '_blank')}>API Docs</span>
+          <span onClick={() => window.open('https://ayush-backend-r2im.onrender.com/api-docs/', '_blank')}>API Docs</span>
           
           <button 
             onClick={cycleTheme}
@@ -355,23 +355,23 @@ function App() {
           </div>
           <div className="footer-col">
             <h4>Platform</h4>
-            <a href="#">🔎 Diagnosis Lookup</a>
-            <a href="#">⚡ REST API Access</a>
-            <a href="#">📄 Developer Docs</a>
-            <a href="#">🟢 System Status</a>
+            <a href="#home">🔎 Diagnosis Lookup</a>
+            <a href="https://ayush-backend-r2im.onrender.com/api-docs/" target="_blank" rel="noreferrer">⚡ REST API Access</a>
+            <a href="https://ayush-backend-r2im.onrender.com/api/docs/" target="_blank" rel="noreferrer">📄 Developer Docs</a>
+            <a href="#faq">🟢 System Status</a>
           </div>
           <div className="footer-col">
             <h4>Research</h4>
-            <a href="#">📚 Methodology</a>
-            <a href="#">🧠 Semantic Mapping</a>
-            <a href="#">📜 Literature Review</a>
-            <a href="#">👥 Project Team</a>
+            <a href="#how-it-works">📚 Methodology</a>
+            <a href="#analyze-standards">🧠 Semantic Mapping</a>
+            <a href="#faq">📜 Literature Review</a>
+            <a href="#home">👥 Project Team</a>
           </div>
           <div className="footer-col">
             <h4>Connect</h4>
-            <a href="#">🐙 GitHub Repository</a>
-            <a href="#">💼 LinkedIn Profile</a>
-            <a href="#">📧 Contact Research Lead</a>
+            <a href="https://github.com" target="_blank" rel="noreferrer">🐙 GitHub Repository</a>
+            <a href="https://www.linkedin.com" target="_blank" rel="noreferrer">💼 LinkedIn Profile</a>
+            <a href="mailto:info@ayushbridge.org">📧 Contact Research Lead</a>
           </div>
         </div>
         <div className="footer-bottom">
