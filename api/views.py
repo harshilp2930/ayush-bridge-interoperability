@@ -97,20 +97,18 @@ def search_api(request):
     scored_results = []  # Will store tuples of (diagnosis, score, term_length)
     
     for item in all_diagnoses:
-        # Calculate fuzzy match score using multiple algorithms for better accuracy
-        # Combine three methods to get more consistent results:
-        #   1. token_set_ratio: Compares word sets, ignoring order (best for multi-word terms)
-        #   2. token_sort_ratio: Sorts tokens before comparing (good for word reordering)
-        #   3. partial_ratio: Finds longest substring match (for partial queries)
-        score1 = fuzz.token_set_ratio(query.lower(), item.term.lower())
-        score2 = fuzz.token_sort_ratio(query.lower(), item.term.lower())
-        score3 = fuzz.partial_ratio(query.lower(), item.term.lower())
+        # Calculate fuzzy match score using robust matching algorithms
+        # Use two complementary methods for reliable results:
+        # - ratio: Character-level string similarity
+        # - partial_ratio: Best substring match (handles partial queries like "fee" for "Fever")
+        score1 = fuzz.ratio(query.lower(), item.term.lower())
+        score2 = fuzz.partial_ratio(query.lower(), item.term.lower())
         
-        # Take the average of the three scores for more balanced results
-        combined_score = (score1 + score2 + score3) / 3
+        # Take the maximum score (use best match)
+        combined_score = max(score1, score2)
         
-        # Step 3: Filter - only keep good matches (score > 65%)
-        if combined_score > 65:
+        # Step 3: Filter - only keep good matches (score > 60%)
+        if combined_score > 60:
             # Store: diagnosis, combined score, and term length (for secondary sort)
             scored_results.append((item, combined_score, len(item.term)))
     
