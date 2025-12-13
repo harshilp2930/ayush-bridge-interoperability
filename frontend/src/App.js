@@ -1,55 +1,151 @@
+/**
+ * ============================================================================
+ * AYUSH BRIDGE - FRONTEND APPLICATION
+ * ============================================================================
+ * 
+ * Purpose:
+ *   Main React component for the Ayush Bridge interoperability platform.
+ *   Provides disease search, email subscription, and educational content
+ *   about bridging NAMASTE (Traditional Medicine) and ICD-11 (WHO) standards.
+ * 
+ * Key Features:
+ *   - Real-time fuzzy search for disease mappings
+ *   - Theme switching (Light/Dark/System)
+ *   - Email subscription system
+ *   - FAQ accordion
+ *   - Responsive design for all devices
+ * 
+ * API Integration:
+ *   - Backend: https://ayush-backend-r2im.onrender.com
+ *   - Endpoints: /api/search/, /api/subscribe/
+ * 
+ * ============================================================================
+ */
+
+// ============================================================================
+// IMPORTS
+// ============================================================================
+
+// React core hooks
 import React, { useState, useEffect } from 'react';
+
+// HTTP client for API calls
 import axios from 'axios';
+
+// Stylesheet
 import './App.css';
 
+
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
+
 function App() {
-  // --- Existing State ---
+  
+  // ==========================================================================
+  // STATE MANAGEMENT
+  // ==========================================================================
+  
+  // --- Search State ---
+  // Stores user's search query and results from backend
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  
+  // --- Theme State ---
+  // Manages light/dark/system theme preference
+  // Persisted in localStorage for user convenience
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'default');
+  
+  // --- FAQ State ---
+  // Tracks which FAQ item is currently expanded
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
-  // --- NEW: Email Subscription State ---
+  // --- Email Subscription State ---
+  // Stores user's email for subscription feature
   const [email, setEmail] = useState('');
 
-  // --- Theme Logic ---
+  // ==========================================================================
+  // THEME MANAGEMENT
+  // ==========================================================================
+  
+  /**
+   * Effect: Apply theme to DOM and persist preference
+   * 
+   * Handles three theme modes:
+   *   - 'default': Follows system preference (light/dark)
+   *   - 'light': Force light mode
+   *   - 'dark': Force dark mode
+   * 
+   * Updates CSS custom properties via data-theme attribute
+   */
   useEffect(() => {
     const root = document.documentElement;
     root.removeAttribute('data-theme');
 
     if (theme === 'default') {
+      // Check system preference and apply accordingly
       const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       if (systemDark) root.setAttribute('data-theme', 'dark');
     } else {
+      // Apply user's explicit choice
       root.setAttribute('data-theme', theme);
     }
     
+    // Persist theme choice to localStorage
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  /**
+   * Function: Cycle through theme options
+   * Order: default → light → dark → default
+   */
   const cycleTheme = () => {
     if (theme === 'default') setTheme('light');
     else if (theme === 'light') setTheme('dark');
     else setTheme('default');
   };
 
+  /**
+   * Function: Get display label for current theme
+   * Returns emoji + text for theme toggle button
+   */
   const getThemeIcon = () => {
     if (theme === 'light') return '☀️ Light';
     if (theme === 'dark') return '🌙 Dark';
     return '💻 System';
   };
 
+  // ==========================================================================
+  // UTILITY FUNCTIONS
+  // ==========================================================================
+  
+  /**
+   * Function: Smooth scroll to page section
+   * @param {string} id - Element ID to scroll to
+   */
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) element.scrollIntoView({ behavior: 'smooth' });
   };
 
+  /**
+   * Function: Toggle FAQ accordion item
+   * @param {number} index - Index of FAQ item to toggle
+   * Clicking an open item closes it, clicking a closed item opens it
+   */
   const toggleFaq = (index) => {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
   };
 
-  // --- FAQ Data ---
+  // ==========================================================================
+  // STATIC DATA
+  // ==========================================================================
+  
+  /**
+   * FAQ Data Structure
+   * Contains frequently asked questions about the platform
+   */
   const faqData = [
     {
       question: "What is the NAMASTE Portal?",
@@ -69,35 +165,66 @@ function App() {
     }
   ];
 
-  // --- Search Function (UPDATED URL) ---
+  // ==========================================================================
+  // API HANDLERS
+  // ==========================================================================
+  
+  /**
+   * Function: Handle disease search
+   * 
+   * Features:
+   *   - Debounced search (only triggers when query > 1 character)
+   *   - Fuzzy matching on backend
+   *   - Real-time results display
+   * 
+   * API Endpoint: GET /api/search/?q={query}
+   * Backend performs fuzzy matching and returns top 10 results
+   * 
+   * @param {Event} e - Input change event
+   */
   const handleSearch = async (e) => {
     const value = e.target.value;
     setQuery(value);
     
+    // Only search if query is meaningful (> 1 character)
     if (value.length > 1) {
       setLoading(true);
       try {
-        // CHANGED: Now pointing to Render Backend
+        // Call backend search API
         const response = await axios.get(`https://ayush-backend-r2im.onrender.com/api/search/?q=${value}`);
         setResults(response.data);
       } catch (error) {
         console.error("Error connecting to backend:", error);
+        // Could show user-friendly error message here
       }
       setLoading(false);
     } else {
+      // Clear results for short queries
       setResults([]);
     }
   };
 
-  // --- Subscribe Function (UPDATED URL) ---
+  /**
+   * Function: Handle email subscription
+   * 
+   * Validates email format and submits to backend subscription API
+   * Backend prevents duplicate subscriptions automatically
+   * 
+   * API Endpoint: POST /api/subscribe/
+   * Request Body: { email: string }
+   * 
+   * Success: Shows confirmation alert and clears input
+   * Error: Shows specific error message from backend
+   */
   const handleSubscribe = async () => {
+    // Basic email validation
     if (!email || !email.includes('@')) {
       alert("Please enter a valid email address.");
       return;
     }
 
     try {
-      // CHANGED: Now pointing to Render Backend
+      // Submit subscription to backend
       await axios.post('https://ayush-backend-r2im.onrender.com/api/subscribe/', { email: email });
       alert("Success! You are now subscribed.");
       setEmail(''); // Clear the input field
@@ -112,10 +239,16 @@ function App() {
     }
   };
 
+  // ==========================================================================
+  // JSX RENDER
+  // ==========================================================================
+  
   return (
     <div className="App">
       
-      {/* 1. Navigation Bar */}
+      {/* ================================================================== */}
+      {/* SECTION 1: NAVIGATION BAR */}
+      {/* ================================================================== */}
       <nav className="navbar">
         <div className="logo">
           <span>💠</span> Ayush<span style={{color: 'var(--primary)'}}>Bridge</span>
@@ -145,7 +278,9 @@ function App() {
         </div>
       </nav>
 
-      {/* 2. Hero Section */}
+      {/* ================================================================== */}
+      {/* SECTION 2: HERO BANNER */}
+      {/* ================================================================== */}
       <div id="home" className="hero">
         <h1>Interoperability for Traditional Medicine</h1>
         <p>
@@ -154,7 +289,10 @@ function App() {
         </p>
       </div>
 
-      {/* 3. Main Search Interface */}
+      {/* ================================================================== */}
+      {/* SECTION 3: SEARCH INTERFACE */}
+      {/* Real-time disease lookup with fuzzy matching */}
+      {/* ================================================================== */}
       <div className="search-section">
         <div className="search-box-card">
           <h2>Diagnosis Lookup Tool</h2>
@@ -191,7 +329,10 @@ function App() {
         </div>
       </div>
 
-      {/* 4. How It Works Section */}
+      {/* ================================================================== */}
+      {/* SECTION 4: HOW IT WORKS */}
+      {/* Three-step explanation of the mapping process */}
+      {/* ================================================================== */}
       <section id="how-it-works" className="page-section">
         <div style={{textAlign: 'center'}}>
            <h2 className="section-title">How It Works</h2>
@@ -215,7 +356,10 @@ function App() {
         </div>
       </section>
 
-      {/* 5. Use Cases Section */}
+      {/* ================================================================== */}
+      {/* SECTION 5: USE CASES */}
+      {/* Target audience and applications */}
+      {/* ================================================================== */}
       <section id="use-cases" className="page-section section-alt">
         <div style={{textAlign: 'center'}}>
            <h2 className="section-title">Who is this for?</h2>
@@ -254,7 +398,10 @@ function App() {
         </div>
       </section>
 
-      {/* 6. Discover & Analyze Resources */}
+      {/* ================================================================== */}
+      {/* SECTION 6: EXTERNAL RESOURCES */}
+      {/* Links to NAMASTE, ICD-11, and NRCeS portals */}
+      {/* ================================================================== */}
       <section id="analyze-standards" className="page-section discovery-section">
         <div style={{textAlign: 'center'}}>
            <h2 className="section-title">Analyze Standards</h2>
@@ -290,7 +437,10 @@ function App() {
         </div>
       </section>
 
-      {/* 7. FAQ Section */}
+      {/* ================================================================== */}
+      {/* SECTION 7: FAQ ACCORDION */}
+      {/* Frequently asked questions with expand/collapse functionality */}
+      {/* ================================================================== */}
       <section id="faq" className="page-section section-alt">
         <div style={{textAlign: 'center', marginBottom: '3rem'}}>
            <h2 className="section-title">Frequently Asked Questions</h2>
@@ -319,7 +469,10 @@ function App() {
         </div>
       </section>
 
-      {/* 8. Footer */}
+      {/* ================================================================== */}
+      {/* SECTION 8: FOOTER */}
+      {/* Subscription form, navigation links, and branding */}
+      {/* ================================================================== */}
       <footer>
         <div className="footer-top">
           <div className="footer-cta">

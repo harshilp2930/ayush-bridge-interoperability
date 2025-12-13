@@ -1,6 +1,41 @@
+/**
+ * ============================================================================
+ * AYUSH BRIDGE - FRONTEND STYLES
+ * ============================================================================
+ * 
+ * Purpose:
+ *   Complete stylesheet for Ayush Bridge application
+ *   Features modern glassmorphism design with full dark mode support
+ * 
+ * Key Features:
+ *   - CSS Custom Properties for theming
+ *   - Light/Dark mode support via [data-theme] attribute
+ *   - Responsive design for mobile, tablet, desktop
+ *   - Glassmorphism UI effects
+ *   - Smooth transitions and hover effects
+ * 
+ * Structure:
+ *   1. Theme Variables (Light & Dark)
+ *   2. Base Styles
+ *   3. Navigation
+ *   4. Hero Section
+ *   5. Search Interface
+ *   6. Content Sections
+ *   7. FAQ Accordion
+ *   8. Footer
+ *   9. Responsive (Mobile)
+ * 
+ * ============================================================================
+ */
+
+/* Google Fonts Import */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
-/* --- 1. THEME VARIABLES --- */
+/* ============================================================================
+   1. THEME VARIABLES
+   ============================================================================ */
+
+/* --- LIGHT MODE (Default) --- */
 :root {
   /* === LIGHT MODE === */
   --bg-color: #f8fafc;
@@ -33,7 +68,8 @@
   --glass-blur: blur(12px);
 }
 
-/* === DARK MODE === */
+/* --- DARK MODE --- */
+/* Applied when [data-theme='dark'] attribute is set on <html> element */
 [data-theme='dark'] {
   --bg-color: #020617;
   --body-bg: radial-gradient(at 0% 0%, hsla(222,47%,11%,1) 0, transparent 50%),
@@ -62,7 +98,12 @@
   --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
 
-/* --- 2. BASE STYLES --- */
+/* ============================================================================
+   2. BASE STYLES
+   ============================================================================
+   Global styles applied to body and core elements
+   ============================================================================ */
+
 body {
   margin: 0;
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -74,7 +115,13 @@ body {
   transition: all 0.3s ease;
 }
 
-/* --- 3. NAVBAR --- */
+/* ============================================================================
+   3. NAVIGATION BAR
+   ============================================================================
+   Sticky navigation with glassmorphism effect
+   Features: Logo, navigation links, theme toggle button
+   ============================================================================ */
+
 .navbar {
   background: var(--nav-bg);
   backdrop-filter: var(--glass-blur);
@@ -115,7 +162,13 @@ body {
   background: var(--section-alt-bg);
 }
 
-/* --- 4. HERO SECTION --- */
+/* ============================================================================
+   4. HERO SECTION
+   ============================================================================
+   Large banner with gradient background and grid pattern overlay
+   Features: Main heading, subtitle, angled clip-path bottom
+   ============================================================================ */
+
 .hero {
   /* This creates the layered effect */
   background-image: 
@@ -147,7 +200,14 @@ body {
   margin: 0 auto;
 }
 
-/* --- 5. SEARCH SECTION --- */
+/* ============================================================================
+   5. SEARCH INTERFACE
+   ============================================================================
+   Main search functionality with glassmorphism card
+   Components: Search input, results grid, result cards
+   ============================================================================ */
+
+/* Search Container */
 .search-section {
   max-width: 900px; margin: -9rem auto 0; padding: 0 20px; position: relative; z-index: 10;
 }
@@ -171,7 +231,8 @@ body {
 [data-theme='dark'] .search-input:focus { background: #1e293b; }
 
 
-/* --- 5.5 NEW SEARCH RESULTS GRID (With Gap & Style) --- */
+/* --- Search Results Grid --- */
+/* Responsive grid displaying disease mapping cards */
 .results-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -180,7 +241,8 @@ body {
   margin-top: 3rem; 
 }
 
-/* New "Data Ticket" Style Card */
+/* --- Individual Result Card --- */
+/* "Data Ticket" style with colored top border accent */
 .result-card {
   background: #ffffff; 
   border: 1px solid #e2e8f0;
@@ -320,7 +382,14 @@ body {
   margin-top: 1.5rem; font-weight: 700; font-size: 0.9rem; color: var(--primary); display: flex; align-items: center; gap: 5px;
 }
 
-/* --- FAQ ACCORDION STYLES --- */
+/* ============================================================================
+   7. FAQ ACCORDION
+   ============================================================================
+   Expandable Q&A section with smooth animations
+   Features: Glassmorphism effect, +/- toggle icons, smooth transitions
+   ============================================================================ */
+
+/* --- FAQ Container --- */
 .faq-container {
   max-width: 800px;
   margin: 0 auto;
@@ -423,7 +492,13 @@ body {
   font-size: 0.95rem;
 }
 
-/* --- 8. FOOTER --- */
+/* ============================================================================
+   8. FOOTER
+   ============================================================================
+   Multi-column footer with subscription CTA, links, and branding
+   Components: Footer top (CTA), main (links), bottom (copyright)
+   ============================================================================ */
+
 footer {
   background: var(--footer-bg); color: var(--footer-text); padding: 0; border-top: 1px solid var(--footer-border); font-size: 0.9rem;
 }
@@ -446,7 +521,13 @@ footer {
 
 .footer-bottom { padding: 1.5rem 5%; background: rgba(0,0,0,0.02); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--text-secondary); }
 
-/* Badges */
+/* ============================================================================
+   BADGE COMPONENTS
+   ============================================================================
+   Small colored labels for NAMASTE and ICD-11 codes
+   Features: Color-coded backgrounds, uppercase text
+   ============================================================================ */
+
 .badge { padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-right: 10px; }
 .badge-namaste { background: #dcfce7; color: #166534; }
 .badge-icd { background: #dbeafe; color: #1e40af; }
@@ -458,14 +539,16 @@ footer {
   .footer-top { flex-direction: column; align-items: flex-start; gap: 2rem; }
 }
 
-/* =========================================
-   MOBILE RESPONSIVENESS (Phone Fixes)
-   Add this to the very bottom of App.css
-   ========================================= */
+/* ============================================================================
+   9. MOBILE RESPONSIVENESS
+   ============================================================================
+   Optimizations for phones and tablets (max-width: 768px)
+   Fixes: Navigation stack, search overflow, footer layout
+   ============================================================================ */
 
 @media screen and (max-width: 768px) {
 
-  /* --- 1. Navbar Fix (Clean Stack) --- */
+  /* --- Navigation: Vertical Stack --- */
   .navbar {
     flex-direction: column;   /* Stack Logo on top of links */
     height: auto;             /* Let height grow automatically */
@@ -486,7 +569,7 @@ footer {
     padding: 5px 8px;         /* Easier to tap */
   }
 
-  /* --- 2. Search Bar Fix (Prevent Overflow) --- */
+  /* --- Search: Prevent Horizontal Overflow --- */
   .search-section {
     padding: 1rem;            /* Add breathing room */
   }
@@ -504,7 +587,7 @@ footer {
     box-sizing: border-box;   /* Critical for alignment */
   }
 
-  /* --- 3. Footer Email Fix (Vertical Stack) --- */
+  /* --- Footer: Vertical Stack Email Form --- */
   .footer-input-group {
     flex-direction: column;   /* Stack input and button */
     gap: 10px;
@@ -526,7 +609,7 @@ footer {
     padding: 12px;
   }
 
-  /* --- 4. General Cleanup --- */
+  /* --- General: Typography and Grid Adjustments --- */
   .hero h1 {
     font-size: 1.8rem;        /* Smaller headline */
     padding: 0 10px;
