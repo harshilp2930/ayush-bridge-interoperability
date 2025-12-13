@@ -141,3 +141,9 @@ SWAGGER_SETTINGS = {
     'USE_SESSION_AUTH': False,  # Hides the login/logout buttons
     'SECURITY_DEFINITIONS': None, # Ensures the API is treated as completely public
 }
+
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
