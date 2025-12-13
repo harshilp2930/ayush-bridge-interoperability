@@ -1,6 +1,7 @@
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from rest_framework.views import APIView
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from thefuzz import fuzz  # <-- This was missing!
@@ -138,32 +139,31 @@ def subscribe_api(request):
 
 
 # --- TEMPORARY: Create Test User Endpoint ---
-@api_view(['GET'])
-@authentication_classes([])
-@permission_classes([AllowAny])
-def create_test_user_view(request):
-    """Temporary endpoint to create a test user. DELETE THIS AFTER USE!"""
-    User = get_user_model()
-    
-    username = 'apitestuser'
-    email = 'api@test.com'
-    password = 'TestPassword123!'
-    
-    # Delete existing test user if exists
-    User.objects.filter(username=username).delete()
-    
-    # Create new test user
-    user = User.objects.create_user(
-        username=username,
-        email=email,
-        password=password,
-        is_active=True
-    )
-    
-    return Response({
-        'status': 'success',
-        'message': 'Test user created!',
-        'username': username,
-        'password': password,
-        'login_url': '/api/auth/login/'
-    })
+class CreateTestUserView(APIView):
+    authentication_classes = []
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        """Temporary endpoint to create a test user. DELETE THIS AFTER USE!"""
+        User = get_user_model()
+
+        username = 'apitestuser'
+        email = 'api@test.com'
+        password = 'TestPassword123!'
+
+        User.objects.filter(username=username).delete()
+
+        User.objects.create_user(
+            username=username,
+            email=email,
+            password=password,
+            is_active=True
+        )
+
+        return Response({
+            'status': 'success',
+            'message': 'Test user created!',
+            'username': username,
+            'password': password,
+            'login_url': '/api/auth/login/'
+        })
