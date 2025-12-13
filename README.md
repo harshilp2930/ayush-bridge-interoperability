@@ -1,19 +1,17 @@
-# Ayush Bridge Interoperability (Django + React)
+# ⚕️ Ayush Bridge Interoperability (Django + React)
 
 End-to-end Ayush–ICD11 interoperability stack: Django REST API (Render) plus React frontend (Vercel). Supports fuzzy diagnosis search, email subscriptions, and JWT authentication.
 
 **Why it matters**
 
-- Standardizes Ayush (NAMASTE) diagnoses to ICD-11 for hospitals, insurers, and researchers.
-- Ships with live docs, JWT auth, and CORS-ready endpoints for easy integration.
-- Deployed and running: Render (API) + Vercel (UI).
+This project standardizes Ayush (NAMASTE) diagnoses to ICD-11 for hospitals, insurers, and researchers, delivered as a live, documented, JWT-secured REST API with CORS-ready endpoints on Render (API) and Vercel (UI).
 
 ## Project Overview
 
 Ayush Bridge standardizes traditional medicine diagnoses (NAMASTE codes) against ICD-11 so hospitals, insurers, and researchers can exchange data in a format modern EMRs understand. The backend exposes a documented REST API with JWT authentication, while the frontend provides a polished search and subscription experience.
 
 - **Problem**: NAMASTE terms are not natively interoperable with global standards (ICD-11), blocking reporting, insurance, and analytics.
-- **Solution**: A public API that maps Ayush diagnoses to ICD-11 with fuzzy search, secured by JWT, and discoverable via Swagger/OpenAPI.
+- **Solution**: A public API that maps Ayush diagnoses to ICD-11 with **fuzzy search**, secured by JWT, and discoverable via Swagger/OpenAPI.
 - **Consumers**: Hospital information systems, EMR vendors, insurers, public health researchers, and developers integrating Ayush data pipelines.
 
 ## Architecture Snapshot
