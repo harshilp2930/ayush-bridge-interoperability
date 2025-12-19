@@ -64,6 +64,8 @@ function App() {
   // --- Email Subscription State ---
   // Stores user's email for subscription feature
   const [email, setEmail] = useState('');
+  const [subscribeStatus, setSubscribeStatus] = useState({ show: false, message: '', type: '' });
+  const [isSubscribing, setIsSubscribing] = useState(false);
 
   // ==========================================================================
   // THEME MANAGEMENT
@@ -219,23 +221,25 @@ function App() {
   const handleSubscribe = async () => {
     // Basic email validation
     if (!email || !email.includes('@')) {
-      alert("Please enter a valid email address.");
+      setSubscribeStatus({ show: true, message: 'Please enter a valid email address.', type: 'error' });
+      setTimeout(() => setSubscribeStatus({ show: false, message: '', type: '' }), 3000);
       return;
     }
 
+    setIsSubscribing(true);
     try {
       // Submit subscription to backend
       await axios.post('https://ayush-backend-r2im.onrender.com/api/subscribe/', { email: email });
-      alert("Success! You are now subscribed.");
+      setSubscribeStatus({ show: true, message: 'Success! You are now subscribed.', type: 'success' });
       setEmail(''); // Clear the input field
+      setTimeout(() => setSubscribeStatus({ show: false, message: '', type: '' }), 4000);
     } catch (error) {
       console.error("Subscription error:", error);
-      if (error.response && error.response.data) {
-        // Show specific error from backend (e.g., "Already subscribed")
-        alert(error.response.data.message || "Subscription failed.");
-      } else {
-        alert("Something went wrong. Please check your connection.");
-      }
+      const errorMsg = error.response?.data?.message || "Something went wrong. Please try again.";
+      setSubscribeStatus({ show: true, message: errorMsg, type: 'error' });
+      setTimeout(() => setSubscribeStatus({ show: false, message: '', type: '' }), 4000);
+    } finally {
+      setIsSubscribing(false);
     }
   };
 
@@ -490,11 +494,18 @@ function App() {
               className="footer-input"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleSubscribe()}
+              disabled={isSubscribing}
             />
-            <button className="footer-btn" onClick={handleSubscribe}>
-              Subscribe
+            <button className="footer-btn" onClick={handleSubscribe} disabled={isSubscribing}>
+              {isSubscribing ? 'Subscribing...' : 'Subscribe'}
             </button>
           </div>
+          {subscribeStatus.show && (
+            <div className={`subscribe-toast subscribe-toast-${subscribeStatus.type}`}>
+              {subscribeStatus.message}
+            </div>
+          )}
           {/* ------------------------------- */}
         
         </div>
