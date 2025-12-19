@@ -243,6 +243,8 @@ function App() {
   // JSX RENDER
   // ==========================================================================
   
+  // Favicon is provided statically via public/index.html -> %PUBLIC_URL%/logo.png
+  
   return (
     <div className="App">
       
