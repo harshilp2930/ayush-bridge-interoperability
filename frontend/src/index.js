@@ -4,6 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// Load react-grab only in development via Webpack/CRA so the
+// bare module specifier is resolved correctly.
+if (process.env.NODE_ENV === 'development') {
+  import('react-grab').catch((e) => {
+    // Non-fatal: helpful dev tool only
+    console.warn('react-grab not loaded', e);
+  });
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
