@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Stethoscope, ArrowLeft, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, ShieldCheck } from 'lucide-react';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -57,8 +57,8 @@ const Login = () => {
 
           <div className="flex items-center gap-4 text-sm text-slate-400">
             <span>© {new Date().getFullYear()} Ayush Bridge Inc.</span>
-            <a href="#" className="hover:text-white transition-colors">Privacy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms</a>
+            <a href="#!" className="hover:text-white transition-colors">Privacy</a>
+            <a href="#!" className="hover:text-white transition-colors">Terms</a>
           </div>
         </div>
       </div>

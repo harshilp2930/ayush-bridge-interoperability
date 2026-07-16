@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Activity, Key, CheckCircle2, AlertTriangle, ArrowRight } from 'lucide-react';
+import { Activity, CheckCircle2, AlertTriangle, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const DashboardHome = () => {

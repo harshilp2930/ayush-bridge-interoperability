@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { Activity, Key, Search, Settings, LogOut, Menu, X, User } from 'lucide-react';
+import { Activity, Key, Search, Settings, LogOut, Menu, User } from 'lucide-react';
 
 const DashboardLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

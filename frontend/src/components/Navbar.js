@@ -1,13 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Sun, Moon, Laptop, Stethoscope, Menu } from 'lucide-react';
+import { Stethoscope, Menu } from 'lucide-react';
 
-const Navbar = ({ theme, cycleTheme }) => {
-  const getThemeIcon = () => {
-    if (theme === 'light') return <Sun size={18} />;
-    if (theme === 'dark') return <Moon size={18} />;
-    return <Laptop size={18} />;
-  };
+const Navbar = () => {
 
   const scrollToSection = (id) => {
     // If not on home page, maybe we should navigate to home first, but for simplicity we keep it as is.
